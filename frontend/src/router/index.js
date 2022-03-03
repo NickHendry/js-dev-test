@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Dash from '@/layouts/Dash.vue';
+import Checkout from '@/layouts/Checkout.vue';
 import Full from '@/layouts/Full.vue';
 
 Vue.use(VueRouter)
@@ -22,6 +23,18 @@ const routes = [
         component: () => import(/* webpackChunkName: "dash" */ '@/views/Cart.vue'),
       },
     ],
+  },
+
+  {
+    path: '/checkout',
+    component: Checkout,
+    children: [
+      {
+        path: '',
+        name: 'Checkout',
+        component: () => import(/* webpackChunkName: "checkout" */ '@/views/Checkout.vue'),
+      },
+    ]
   },
 
   {
