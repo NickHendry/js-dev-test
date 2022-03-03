@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const module = {
   namespaced: true,
 
@@ -51,6 +53,10 @@ const module = {
       }
 
       commit('setCart', cart);
+    },
+    async purchase({commit}, checkoutDetails) {
+      const {data} = await axios.post('', JSON.stringify(checkoutDetails));
+      return data
     },
   },
 };

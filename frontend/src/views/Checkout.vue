@@ -24,7 +24,7 @@
                 />
         </div>
         <div class="border-md shadow-md w-1/2 p-3 mt-5">
-            <button id="purchaseBtn">Purchase</button>
+            <button @click.prevent="onSubmit">Purchase</button>
         </div>
     </ValidationProvider>
 </template>
@@ -53,6 +53,29 @@ export default{
     },
     computed:{
         ...mapGetters('purchasing', ['cartProducts']),
+    },
+    methods:{
+        async onSubmit() {
+            let cartProds = this.cartProducts
+            const res = await this.$store.dispatch('purchasing/purchase', {
+                products: cartProds,
+                exCost: cartProds.reduce((acc, cur) => acc + (cur.quantity * cur.exPrice), 0).toFixed(2),
+                gstCost: cartProds.reduce((acc, cur) => acc + (cur.quantity * cur.gstPrice), 0).toFixed(2),
+                name: this.name,
+                phone: this.phone,
+                email: this.email
+            });
+
+            if (Array.isArray(res)) {
+                let outputMsg = res.reduce((prev, curr) => prev += `\n${curr.message}`, "Error:");
+                alert(outputMsg)
+            } else {
+                alert(`Order confirmed!\nOrder number: ${res.newOrderId}`)
+
+                this.clearCart()
+                this.$router.push('/')
+            }
+        }
     }
 }
 </script>
