@@ -50,7 +50,7 @@ export default {
 
     // Used for product highlighting 
     inCart(product) {
-      return this.$store.state.purchasing.cart.some(p => p.id = product.id);
+      return this.$store.state.purchasing.cart.some(p => p.id === product.id);
     },
 
     productClicked(product) {     
