@@ -57,6 +57,7 @@ export default{
     methods:{
         async onSubmit() {
             let cartProds = this.cartProducts
+            debugger
             const res = await this.$store.dispatch('purchasing/purchase', {
                 products: cartProds,
                 exCost: cartProds.reduce((acc, cur) => acc + (cur.quantity * cur.exPrice), 0).toFixed(2),
@@ -65,7 +66,7 @@ export default{
                 phone: this.phone,
                 email: this.email
             });
-
+            debugger
             if (Array.isArray(res)) {
                 let outputMsg = res.reduce((prev, curr) => prev += `\n${curr.message}`, "Error:");
                 alert(outputMsg)
