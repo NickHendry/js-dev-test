@@ -53,6 +53,11 @@ function getAllProducts(req, res) {
   res.json(products);
 }
 
+function getAllProductsJson() {
+  return products
+}
+
 module.exports = {
   getAllProducts,
+  getAllProductsJson,
 }
