@@ -18,7 +18,7 @@
         <p class="text-right">${{ totalEx }} ex.</p>
         <p class="text-right">+ ${{ totalGst }} GST</p>
         <hr class="w-32 my-3 ml-auto">
-        <div class="text-right">${{ totalEx + totalGst }}</div>
+        <div class="text-right">${{ total }}</div>
       </div>
     </div>
     <router-link 
@@ -46,11 +46,15 @@ export default {
     ...mapGetters('purchasing', ['cartProducts']),
 
     totalEx() {
-      return this.cartProducts.reduce((acc, cur) => acc + (cur.quantity * cur.exPrice), 0);
+      return this.cartProducts.reduce((acc, cur) => acc + (cur.quantity * cur.exPrice), 0).toFixed(2);
     },
 
     totalGst() {
-      return this.cartProducts.reduce((acc, cur) => acc + (cur.quantity * cur.gstPrice), 0);
+      return this.cartProducts.reduce((acc, cur) => acc + (cur.quantity * cur.gstPrice), 0).toFixed(2);
+    },
+
+    total() {
+      return this.cartProducts.reduce((acc, cur) => acc + (cur.quantity * (cur.exPrice + cur.gstPrice)), 0).toFixed(2);
     },
   },
 }
